@@ -1,0 +1,88 @@
+
+.alert{
+    min-width: auto;
+    margin-top: 20px;
+    text-align: center;
+    text-transform: capitalize;
+    float: right;
+    position: fixed;
+    top: 0;
+    right: 50px;
+}
+
+.close{
+    font-size: 14px;
+}
+
+.stracture{
+    margin-top: 100px;
+    padding: 50px !important;
+}
+
+.signin{
+    max-width: 100%;
+}
+
+.signin .signin-logo{
+    font-size: 55px !important;
+    font-weight: var(--wlight) !important;
+    color: var(--blue) !important;
+}
+.signin p{
+    margin: 20px 0 40px 0;
+}
+
+.stracture{
+    padding: 50px !important;
+}
+
+.form-control{
+    margin: 10px 0 0 0;
+    border: none !important;
+    border-bottom: 1px solid #797979 !important;
+    border-radius: 0 !important;
+    padding: 0 0 10px 10px !important;
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+}
+
+.input-group-text{
+    padding: 0 !important;
+    border: 0;
+    background-color: #fff !important;
+}
+
+.input-group-text i{
+    position: absolute;
+    margin-left: 20px;
+    padding-bottom: 5px;
+}
+
+.image img {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: auto;
+}
+
+
+.mb-3 i{
+    display: flex;
+}
+
+.login_button{
+    font-size: 18px;
+    font-weight: var(--bold);
+    text-transform: uppercase;
+}
+
+.signin .log_text{
+    margin: 15px 0 25px 0;
+}
+
+.signin .inner_link{
+    font-weight: var(--bold);
+    font-size: var(--psize);
+}

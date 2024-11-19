@@ -1,0 +1,99 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}SEUCC | Events{% endblock title %}
+{% block links %}
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+{% endblock links %}
+
+{% block content %}
+
+    <div class="container">
+        <h4 class="text-center mb-4">Events We Have Organized</h4>
+
+        <!-- Add Event Button (Visible for Staff/Superuser) -->
+        {% if user_can_create.is_staff or user_can_create.is_superuser %}
+            <div class="text-end mb-4">
+                <!-- Button to trigger modal -->
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                    Create Event
+                </button>
+            </div>
+
+            <!-- Create Event Modal -->
+            <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createEventModalLabel">Create Event</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ form.title }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.image }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.details }}
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Event Cards -->
+        <div class="row">
+            {% for event in page_obj %}
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#eventModal{{ event.id }}">
+                        <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}">
+                        <div class="card-body">
+                            <p class="card-text text-muted">Created: {{ event.created_at|date:"F j, Y, g:i a" }}</p>
+                            <h5 class="card-title">{{ event.title }}</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Modal -->
+                <div class="modal fade" id="eventModal{{ event.id }}" tabindex="-1" aria-labelledby="eventModalLabel{{ event.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eventModalLabel{{ event.id }}">{{ event.title }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="{{ event.image.url }}" class="img-fluid mb-3" alt="{{ event.title }}">
+                                <p><strong>Details:</strong> {{ event.details }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item active"><a class="page-link">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        </div>
+    </div>
+{% endblock content %}

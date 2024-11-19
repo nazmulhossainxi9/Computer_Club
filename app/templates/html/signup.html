@@ -1,0 +1,60 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}Signup{% endblock title %}
+{% block links %}
+<link rel="stylesheet" href=" {% static "css/signup.css" %} ">
+{% endblock links %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-center align-items-center ">
+        <div class="row bg-white shadow-lg rounded stracture">
+            <!-- Left Side: Form -->
+            <div class="col-sm-5 d-flex align-items-center">
+                <div class="signup">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <h4 class="greet">Let's Signup to</h4>
+                        <a href="{% url "home" %}" class="signup-logo">SEUCC</a>
+                        <p class="ptext">Join with us to Learn, Showcase and Fun.</p>
+                        <!-- Displaying the form fields -->
+                    
+
+                        {% for data in form %}
+                            <div class="mb-3 input-group-text">
+                                {% if data.name == "username" %}
+                                    <i class="fa-solid fa-user"></i>{{data}} {{data.tags|striptags}} <br>
+                                
+                                {% elif data.name == "first_name" %}
+                                    <i class="fa-solid fa-pencil"></i>{{data}} {{data.tags|striptags}} <br>
+                                {% elif data.name == "last_name" %}
+                                    <i class="fa-solid fa-pencil"></i>{{data}} {{data.tags|striptags}} <br>
+                                {% elif data.name == "email" %}
+                                    <i class="fa-solid fa-envelope"></i>{{data}} {{data.tags|striptags}} <br>
+                                {% elif data.name == "password1" %}
+                                    <i class="fa-solid fa-lock-open"></i>{{data}} {{data.tags|striptags}} <br>
+                                {% elif data.name == "password2" %}
+                                    <i class="fa-solid fa-lock"></i>{{data}} {{data.tags|striptags}} <br>
+                                
+                                {% else %}
+                                    <i class="fa-solid fa-check"></i>{{data}} {{data.tags|striptags}} <br>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <p class="log_text">Already have an account? <a class="inner_link" href=" {% url "login" %} ">Login</a></p>
+                        <input type="submit" value="Signup" class="btn btn-warning w-100 login_button">
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Right Side: Image -->
+            <div class="col-sm-7 d-flex align-items-center justify-content-center">
+                <div class="image">
+                    <img src="{% static "img/signup.jpg" %}" alt="Login Image" class="img-fluid rounded" style="max-height: 500px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,110 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}SEUCC | Home{% endblock title %}
+{% block links %}
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+{% endblock links %}
+
+{% block content %}
+
+    <div class="slider">
+        <img class="image-fluid" src="{% static "img/banner.png" %}" alt="">
+    </div>
+
+    <div class="container d-flex justify-content-center align-items-center announcement">
+        <span class="event_announce justify-content-start">Upcoming Events</span><marquee behavior="" direction="" class="marquee_data">An year-end event will be announced soon with lots of events. Stay tuned with us to get notified.</marquee>
+    </div>
+
+
+    <!-- Faculties -->
+    
+    <div class="container d-flex justify-content-center align-items-center committee">
+        <div class="row">
+            <div class="title container text-center managers">Current Managing Panel</div>
+            {% for member in committee_data %}
+            <div class="col-md-4 p-1">
+                <div class="card">
+                    <div class="image-container">
+                        <img src="{% static member.image %}" class="card-img-top" alt="{{ member.name }}">
+                    </div>
+                    <div class="card-img-overlay d-flex align-items-end  p-0">
+                        <div class="w-100 bg-dark bg-opacity-50 text-white text-center py-4">
+                            <h5 class="mb-1">{{ member.name }}</h5>
+                            <p class="mb-0">{{ member.designation }}</p>
+                            <small>{{ member.text }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- EC 4 -->
+    <div class="container d-flex justify-content-center align-items-center ec">
+        <div class="row">
+            <div class="title container text-center ec_panel">Executive Panel</div>
+            {% for member in ec_data %}
+            <div class="col-md-3 p-1">
+                <div class="card">
+                    <div class="image-container">
+                        <img src="{% static member.image %}" class="card-img-top" alt="{{ member.name }}">
+                    </div>
+                    <div class="card-img-overlay d-flex align-items-end p-0">
+                        <div class="w-100 bg-dark bg-opacity-50 text-white text-center py-4">
+                            <h5 class="mb-1">{{ member.name }}</h5>
+                            <p class="mb-0">{{ member.designation }}</p>
+                            <small>{{ member.text }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="members text-center mt-5">
+                <button class="btn btn-warning w-100 py-3 px-0">View All Members</button>
+            </div>
+        </div>
+    </div>
+    
+    <section class="join text-center ">
+        {% if user.is_authenticated %}
+            <div class="container join_text"><a href="#">Click to Join Southeast Computer Club</a></div>
+        {% else %}
+            <div class="container join_text"><a href="login">Click to Join Southeast Computer Club</a></div>
+        {% endif %}
+    </section>
+
+    <section class="events">
+        <div id="eventCarousel" class="carousel slide container" data-bs-ride="carousel ec">
+            <div class="title container text-center ec_panel">Events We Have Organized</div>
+            <div class="carousel-inner">
+                {% for group in events|slice:"3" %}  <!-- Grouping events in batches of 3 -->
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="d-flex justify-content-center">
+                        {% for event in events %}
+                        <div class="card mx-2" style="width: 18rem;">
+                            <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ event.title }}</h5>
+                                {% comment %} <a href="{% url 'events' event.id %}" class="btn btn-primary">Read More</a> {% endcomment %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+
+{% endblock content %}
