@@ -7,6 +7,7 @@ from . import models
 import datetime
 from django.conf import settings
 import os
+from django.utils.timezone import now
 
 from django.core.paginator import Paginator
 from .models import Event
@@ -151,3 +152,66 @@ def events(request):
             'page_obj': page_obj,
             'user_can_create': request.user,
         })
+    
+
+
+
+
+
+def members(request):
+    form = forms.MembersForm()
+
+    # Get the current year
+    current_year = now().year
+
+    # Check if the user has selected a year, default to the current year if not
+    selected_year = request.GET.get('year')
+    if not selected_year:
+        selected_year = current_year  # Default to current year if no year is provided
+    else:
+        selected_year = int(selected_year)  # Convert to integer if provided
+
+    # Filter members based on the selected year
+    members = models.Members.objects.filter(joining_year=selected_year)
+
+    # Grouping members by position
+    position_groups = {
+        'Elected Committee': members.filter(position__in=['President', 'Vice President', 'GS', 'Treasurer']),
+        'Graphics Design': members.filter(position='Graphics Design'),
+        'Research Team': members.filter(position='Research Team'),
+        'General Member': members.filter(position='General Member'),
+    }
+
+    # For staff or superusers, handle member creation and viewing
+    if request.user.is_staff or request.user.is_superuser:
+        if request.method == 'POST':
+            form = forms.MembersForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return render(request, 'html/members.html', {
+                'form': form,
+                'position_groups': position_groups,
+                'selected_year': selected_year,
+                'years': models.Members.objects.values_list('joining_year', flat=True).distinct().order_by('joining_year'),
+                'is_admin': True,
+            })
+        return render(request, 'html/members.html', {
+            'form': form,
+            'position_groups': position_groups,
+            'selected_year': selected_year,
+            'years': models.Members.objects.values_list('joining_year', flat=True).distinct().order_by('joining_year'),
+            'is_admin': True,
+        })
+
+    # For regular users
+    return render(request, 'html/members.html', {
+        'position_groups': position_groups,
+        'selected_year': selected_year,
+        'years': models.Members.objects.values_list('joining_year', flat=True).distinct().order_by('joining_year'),
+        'is_admin': False,
+        'current_year': current_year,
+    })
+
+
+def construction(request):
+    return render(request, "html/error.html")

@@ -3,7 +3,7 @@
 
 {% block title %}SEUCC | Events{% endblock title %}
 {% block links %}
-    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    <link rel="stylesheet" href="{% static "css/events.css" %}">
 {% endblock links %}
 
 {% block content %}
@@ -71,7 +71,7 @@
                             </div>
                             <div class="modal-body">
                                 <img src="{{ event.image.url }}" class="img-fluid mb-3" alt="{{ event.title }}">
-                                <p><strong>Details:</strong> {{ event.details }}</p>
+                                <p class="text"><strong>Details:</strong> {{ event.details }}</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

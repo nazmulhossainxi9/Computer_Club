@@ -1,0 +1,88 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}SEUCC | Members{% endblock title %}
+{% block links %}
+    <link rel="stylesheet" href="{% static "css/members.css" %}">
+{% endblock links %}
+
+
+{% block content %}
+    <div class="container mt-4">
+
+        <!-- Year Filter Form -->
+        <form method="GET" class="d-flex mb-4">
+            <select name="year" class="form-select me-2">
+                <option value="">Select Year</option>
+                {% for year in years %}
+                    <option value="{{ year }}" {% if selected_year == year %}selected{% endif %}>
+                        {{ year }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary ms-2">Filter</button>
+        </form>
+        <!-- Admin Modal to Add Members -->
+    {% if is_admin %}
+        <button class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addMemberModal">Add Member</button>
+        <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addMemberModalLabel">Add New Member</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+        <!-- Year Filter Form -->
+        {% comment %} <form method="GET" class="d-flex mb-4">
+            <select name="year" class="form-select me-2">
+                <option value="">Select Year</option>
+                {% for year in years %}
+                    <option value="{{ year }}" {% if selected_year == year %}selected{% endif %}>
+                        {{ year }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary ms-2">Filter</button>
+        </form> {% endcomment %}
+
+        <!-- Display Members by Position -->
+        {% for group_name, group_members in position_groups.items %}
+            <h3>{{ group_name }}</h3>
+            <div class="row">
+                {% for member in group_members %}
+                    <div class="col-md-4 my-4">
+                        <div class="card mb-3">
+                            <div class="image-wrapper">
+                                <img src="{{ member.image.url }}" class="card-img-top" alt="{{ member.name }}">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ member.name }}</h5>
+                                <p class="card-text">
+                                    Position: {{ member.position }}  <br>
+                                    Batch: {{ member.batch }} <br>
+                                    Email: {{ member.email }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    
+
+{% endblock content %}

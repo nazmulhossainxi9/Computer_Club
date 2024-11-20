@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Event
+from .models import Event, Members
 
 
 
@@ -98,3 +98,64 @@ class LoginForm(AuthenticationForm):
             'class': 'form-control',
             'placeholder': 'Password',
         })
+
+
+class MembersForm(forms.ModelForm):
+    class Meta:
+        model = Members
+        fields = '__all__'
+        widgets = {
+            'member_id': forms.TextInput(attrs={
+                'placeholder': 'Enter Member ID',
+                'class': 'form-control',
+            }),
+            'student_code': forms.TextInput(attrs={
+                'placeholder': 'Enter Student Code',
+                'class': 'form-control',
+            }),
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Enter Full Name',
+                'class': 'form-control',
+            }),
+            'department': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+            'joining_year': forms.NumberInput(attrs={
+                'placeholder': 'Enter Joining Year',
+                'class': 'form-control',
+            }),
+            'leaving_year': forms.NumberInput(attrs={
+                'placeholder': 'Enter Leaving Year',
+                'class': 'form-control',
+            }),
+            'batch': forms.TextInput(attrs={
+                'placeholder': 'CSE 44/CSE D4',
+                'class': 'form-control',
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Enter Email',
+                'class': 'form-control',
+            }),
+            'blood_group': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+            'position': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+            'facebook_link': forms.URLInput(attrs={
+                'placeholder': 'Enter Facebook Profile Link',
+                'class': 'form-control',
+            }),
+            'linkedin_link': forms.URLInput(attrs={
+                'placeholder': 'Enter LinkedIn Profile Link',
+                'class': 'form-control',
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.label = ""  # Remove labels

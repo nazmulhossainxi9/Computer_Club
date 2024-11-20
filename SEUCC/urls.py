@@ -29,6 +29,8 @@ urlpatterns = [
     path("login", views.login, name="login"),
     path("logout", views.logout, name="logout"),
     path("events", views.events, name="events"),
+    path("members", views.members, name="members"),
+    path("construction", views.construction, name="construction"),
 ]
 
 if settings.DEBUG:

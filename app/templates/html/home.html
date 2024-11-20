@@ -62,11 +62,15 @@
             </div>
             {% endfor %}
             <div class="members text-center mt-5">
-                <button class="btn btn-warning w-100 py-3 px-0">View All Members</button>
+                <a href="{% url "members" %}">
+                    <button class="btn btn-warning w-100 py-3 px-0">View All Members</button>
+                </a>
             </div>
         </div>
     </div>
     
+
+    <!-- Join SEUCC -->
     <section class="join text-center ">
         {% if user.is_authenticated %}
             <div class="container join_text"><a href="#">Click to Join Southeast Computer Club</a></div>
@@ -75,11 +79,13 @@
         {% endif %}
     </section>
 
+
+    <!-- Event Card --> 
     <section class="events">
         <div id="eventCarousel" class="carousel slide container" data-bs-ride="carousel ec">
             <div class="title container text-center ec_panel">Events We Have Organized</div>
             <div class="carousel-inner">
-                {% for group in events|slice:"3" %}  <!-- Grouping events in batches of 3 -->
+                {% for group in events|slice:"0:2" %}  <!-- Grouping events in batches of 3 -->
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <div class="d-flex justify-content-center">
                         {% for event in events %}
@@ -87,7 +93,7 @@
                             <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ event.title }}</h5>
-                                {% comment %} <a href="{% url 'events' event.id %}" class="btn btn-primary">Read More</a> {% endcomment %}
+                                {% comment %} <a href="{% url '' event.id %}" class="btn btn-primary">Read More</a> {% endcomment %}
                             </div>
                         </div>
                         {% endfor %}
@@ -103,6 +109,11 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
+        </div>
+        <div class="members container text-center mt-5">
+            <a href="{% url "events" %}">
+                <button class="btn btn-primary w-100 py-3 px-0">Read All Events</button>
+            </a>
         </div>
     </section>
 

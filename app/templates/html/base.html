@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Logo Icon -->
+    <link rel="icon" href="{% static "img/logo-02.png" %}" type="image/icon type">
+
+
     <title> {% block title %}{% endblock title %} </title>
 
     <!-- Fontawesome -->
@@ -22,7 +26,9 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container menubar">
             {% comment %} <a class="navbar-brand logo" href=" {% url "home" %} ">Southeast Computer Club</a> {% endcomment %}
-            <img src=" {% static "img/Computer club logo-01.png" %} " alt="">
+            <div class="logo">
+                <a href="{% url "home" %}"><img class="image-fluid" src=" {% static "img/logo-01.png" %} " alt="Southeast Computer Club"></a>
+            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,16 +38,16 @@
                         <a class="nav-link {% if request.path == "/home" %}active{% endif %}" href=" {% url "home" %} ">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Gallery</a>
+                        <a class="nav-link" href="{% url "construction" %}"> Gallery</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Certificate Verify</a>
+                        <a class="nav-link" href="construction"> Certificate Verify</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == "/events" %}active{% endif %}" href="{% url "events" %}"> Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Members</a>
+                        <a class="nav-link {% if request.path == "/members" %}active{% endif %}" href="{% url "members" %}"> Members</a>
                     </li>
                     
                     {% if user.is_authenticated %}
@@ -72,7 +78,7 @@
     {% block content %}{% endblock content %}
 
 
-    <footer class="bg-dark text-white p-5">
+    <footer class="bg-dark text-white pt-5 pb-3">
         <div class="container">
             <!-- First Row: Club Name and Details -->
             <div class="row mb-3">
