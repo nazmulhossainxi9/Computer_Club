@@ -1,5 +1,5 @@
 from django.db import models
-
+import os
 # Create your models here.
 
 class Event(models.Model):
@@ -63,4 +63,27 @@ class Members(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def upload_to(instance, filename):
+    # Rename the file based on the email address
+    ext = filename.split('.')[-1]
+    new_filename = f"{instance.email}.{ext}"  # Renaming the photo to email address with the original extension
+    return os.path.join('certificate_photos/', new_filename)
+
+
+class Certificate(models.Model):
+    user_id = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    batch = models.CharField(max_length=50)
+    year = models.IntegerField()
+    event_title = models.CharField(max_length=200)
+    event_date = models.DateField()
+    position = models.CharField(max_length=100, blank=True, null=True)
+    photo = models.ImageField(upload_to=upload_to, blank=True, null=True)  # Make the photo optional
+
+    def __str__(self):
+        return f"{self.name} - {self.event_title} ({self.year})"
+
     

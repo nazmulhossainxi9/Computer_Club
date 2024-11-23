@@ -8,6 +8,7 @@ import datetime
 from django.conf import settings
 import os
 from django.utils.timezone import now
+from django.db.models import Q
 
 from django.core.paginator import Paginator
 from .models import Event
@@ -215,3 +216,29 @@ def members(request):
 
 def construction(request):
     return render(request, "html/error.html")
+
+
+
+def certificate(request):
+    form = forms.CertificateForm()
+    results = None
+    photo_url = None
+
+    if request.method == 'POST' and 'search' in request.POST:
+        query = request.POST.get('query')
+        # Filter certificates based on user_id or email
+        results = models.Certificate.objects.filter(
+            Q(user_id=query) | Q(email=query)
+        ).order_by('-year')
+
+
+
+    elif request.method == 'POST' and 'add_certificate' in request.POST:
+        form = forms.CertificateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+
+    return render(request, 'html/certificate.html', {
+        'form': form,
+        'results': results,
+    })

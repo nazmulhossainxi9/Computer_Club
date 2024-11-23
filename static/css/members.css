@@ -1,6 +1,6 @@
 .image-wrapper {
-    width: 100%; /* Ensures the image spans the card width */
-    height: 350px; /* Fixed height for all images */
+    width: auto; /* Ensures the image spans the card width */
+    height: 400px; /* Fixed height for all images */
     overflow: hidden; /* Crop images that exceed the set height */
     display: flex;
     justify-content: center;

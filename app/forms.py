@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Event, Members
+from .models import Event, Members, Certificate
 
 
 
@@ -159,3 +159,32 @@ class MembersForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.label = ""  # Remove labels
+
+
+
+class CertificateSearchForm(forms.Form):
+    query = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Search by Email Address',
+            'class': 'form-control',  # Optional: Add a class for styling
+        }),
+    )
+
+
+class CertificateForm(forms.ModelForm):
+    class Meta:
+        model = Certificate
+        fields = ['user_id', 'name', 'email', 'batch', 'year', 'event_title', 'event_date', 'position', 'photo']
+        widgets = {
+            'user_id': forms.TextInput(attrs={'placeholder': 'Student Code', 'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Full Name', 'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Personal Email', 'class': 'form-control'}),
+            'batch': forms.TextInput(attrs={'placeholder': 'Batch: Ex - CSE 44', 'class': 'form-control'}),
+            'year': forms.NumberInput(attrs={'placeholder': 'Year', 'class': 'form-control'}),
+            'event_title': forms.TextInput(attrs={'placeholder': 'Event Title', 'class': 'form-control'}),
+            'event_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'position': forms.TextInput(attrs={'placeholder': 'Position (optional)', 'class': 'form-control'}),
+            'photo': forms.ClearableFileInput(attrs={'multiple': False}),
+        }

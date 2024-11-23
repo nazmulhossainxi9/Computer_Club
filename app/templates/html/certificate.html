@@ -1,0 +1,126 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}SEUCC | Verify Certificate{% endblock title %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'css/certificate.css' %}">
+{% endblock links %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <h3 class="text-center mb-5 title">Certificate Verification</h3>
+        
+        <div class="text-center">
+            <form method="POST" class="d-flex justify-content-center" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="query" placeholder="Search by Email or User ID" class="form-control" required>
+                    <button class="btn btn-primary ms-2 search" type="submit" name="search">Search</button>
+                </div>
+            </form>
+        </div>
+
+        
+        {% if user.is_staff or user.is_superuser %}
+            <div class="text-center mt-4">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCertificateModal">Add Certificate</button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="addCertificateModal" tabindex="-1" aria-labelledby="addCertificateModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addCertificateModalLabel">Add Certificate</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" enctype="multipart/form-data">  <!-- Added enctype for image upload -->
+                                {% csrf_token %}
+                                
+                                <div class="mb-3">
+                                    {{ form.user_id }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.name }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.email }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.batch }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.year }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.event_title }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.event_date }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.photo }} <!-- File input for photo -->
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.position }}
+                                </div>
+
+                                <button type="submit" name="add_certificate" class="btn btn-primary w-100 mt-2 mb-3">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if results is not None %}
+        <div class="mt-4">
+            {% if results %}
+                <div class="container text-center">
+                    
+                    <div class="photo">
+                        <div class="user_photo text-center">
+                            {% for result in results %}
+                                {% if result.photo %}
+                                    <img class="image-fluid" src="{{ result.photo.url }}" alt="{{ result.name }}'s certificate photo">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="table-responsive mt-4">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Batch</th>
+                                <th>Event Title</th>
+                                <th>Event Date</th>
+                                <th>Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                                <tr>
+                                    <td>{{ result.name }}</td>
+                                    <td>{{ result.email }}</td>
+                                    <td>{{ result.batch }}</td>
+                                    <td>{{ result.event_title }}</td>
+                                    <td>{{ result.event_date }}</td>
+                                    <td>{{ result.position|default:"N/A" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center alert alert-danger">No certificates found</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    </div>
+{% endblock content %}

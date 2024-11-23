@@ -30,7 +30,9 @@ urlpatterns = [
     path("logout", views.logout, name="logout"),
     path("events", views.events, name="events"),
     path("members", views.members, name="members"),
+    path("certificate", views.certificate, name="certificate"),
     path("construction", views.construction, name="construction"),
+    # path('add-certificate/', views.add_certificate, name='add_certificate'), 
 ]
 
 if settings.DEBUG:

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Members
+from .models import Event, Members, Certificate
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -13,3 +13,10 @@ class MembersAdmin(admin.ModelAdmin):
     list_display = ("member_id", "student_code", "name", "department", "joining_year", "leaving_year", "batch", "email", "blood_group", "position", "facebook_link", "linkedin_link", "image")
     search_fields = ("student_code", "email", "member_id")
     list_filter = ("student_code", "email", "member_id",  "joining_year")
+
+
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'batch', 'year', 'event_title')
+    search_fields = ('email', 'user_id')

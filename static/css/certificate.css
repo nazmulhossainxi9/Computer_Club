@@ -1,0 +1,24 @@
+
+.photo{
+    height: 400px;
+    width: 100%;
+}
+
+.user_photo{
+    display: cover;
+}
+
+.user_photo img{
+    width: auto;
+    height: 400px;
+    object-fit: cover;
+}
+
+.user{
+    width: auto;
+    height: 200px;
+}
+
+.search{
+    z-index: 0 !important;
+}
