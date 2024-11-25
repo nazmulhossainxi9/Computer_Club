@@ -22,8 +22,32 @@ class CertificateAdmin(admin.ModelAdmin):
     search_fields = ('email', 'user_id')
 
 
+# @admin.register(ApplyClub)
+# class ClubJoinRequestAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'student_code', 'department', 'batch',)
+#     list_filter = ('department', 'batch',)
+#     search_fields = ('name', 'student_code', 'university_email', "personal_email")
+
 @admin.register(ApplyClub)
 class ClubJoinRequestAdmin(admin.ModelAdmin):
-    list_display = ('name', 'student_code', 'department', 'batch',)
+    list_display = (
+        "student_code",
+        "name",
+        "department",
+        "batch",
+        "university_email",
+        "personal_email",
+        "blood_group",
+        "facebook_link",
+        "portfolio_link",
+        "semester",
+        "current_cgpa",
+        "personal_contact_number",
+        "emergency_contact_number",
+        "present_address",
+        "permanent_address",
+        "experience_details",
+        "other_clubs_details",
+    )
     list_filter = ('department', 'batch',)
     search_fields = ('name', 'student_code', 'university_email', "personal_email")

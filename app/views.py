@@ -245,20 +245,38 @@ def certificate(request):
 
 
 def apply(request):
+    
     if request.method == 'POST':
         form = forms.ClubJoinRequestForm(request.POST, request.FILES)
         if form.is_valid():
+            cgpa = form.cleaned_data["current_cgpa"]
+            student_code = form.cleaned_data["student_code"]
+            university_email = form.cleaned_data["university_email"]
+            user_code = request.user.username
+
             try:
-                # Save the form data to the database
-                form.save()
-                messages.success(request, "Join Request Submitted Successfully.")
-                return redirect('home')  # Prevent duplicate form submission
+                
+                if student_code == user_code or request.user.is_staff or request.user.is_superuser and len(student_code)==13:
+                    if student_code in university_email:
+                        if cgpa>=2.50 and cgpa<=4.00:
+                            if university_email.endswith('@seu.edu.bd'):
+                                form.save()
+                                messages.success(request, "Join Request Submitted Successfully")
+                                return redirect('home') 
+                            else:
+                                messages.warning(request, "University Email Doesn't Matched")
+                        else:  # Debugging form validation errors
+                            messages.warning(request, "CGPA has to be between 2.50 - 4.00")
+                    else:
+                        messages.warning(request, "Student Code and University Email Doesn't Matched")
+                else:
+                    messages.warning(request, "You can't apply on behalf of others.")
             except Exception as e:
                 print(f"Error during form save: {e}")  # Debugging error
                 messages.warning(request, "An error occurred while saving your data. Please try again.")
         else:
             print("Form errors:", form.errors)  # Debugging form validation errors
-            messages.warning(request, "There was an error in your submission. Please correct the errors below.")
+            messages.warning(request, "Already Applied. If Not, Contact to the Club President")
     else:
         form = forms.ClubJoinRequestForm()
 

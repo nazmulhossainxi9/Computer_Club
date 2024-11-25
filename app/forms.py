@@ -249,6 +249,7 @@ class ClubJoinRequestForm(forms.ModelForm):
                 'personal_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Personal Email Address'}),
                 'blood_group': forms.Select(attrs={'class': 'form-select'}),
                 'facebook_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Your Facebook Profile Link'}),
+                'portfolio_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Your Design Portfolio Link'}),
                 'image': forms.FileInput(attrs={'class': 'form-control'}),
                 'semester': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Current Semester'}),
                 'current_cgpa': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Current CGPA'}),

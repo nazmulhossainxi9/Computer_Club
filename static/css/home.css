@@ -6,6 +6,9 @@
     float: right !important;
 } 
 
+.form-control{
+    text-transform: capitalize;
+}
 
 .slider{
     width: 100%;
