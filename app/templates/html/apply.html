@@ -1,0 +1,103 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}SEUCC | JoinSEUCC{% endblock title %}
+{% block links %}
+    <link rel="stylesheet" href="{% static "css/apply.css" %}">
+{% endblock links %}
+
+
+{% block messages %}
+    <div class="floating-messages">
+        {% if messages %}
+            {% for message in messages %}
+                <span {% if message.tags %} class="alert custom_messages alert-{{message.tags}} alert-dismissible fade show" {% endif %}>{{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </span>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock messages %}
+
+
+{% block content %}
+
+    <div class="container my-5">
+        
+        <form method="post" enctype="multipart/form-data" class="p-4 border rounded bg-light">
+            {% csrf_token %}
+            <div class="title text-center mb-5 mt-3">
+                <h4 class="title">Apply to Join SEUCC</h4>
+            </div>
+            <!-- General Information -->
+            <div class="row mt-3">
+                <div class="col-md-6 mb-3">{{ form.university_email }}</div>
+                <div class="col-md-6 mb-3">{{ form.name }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">{{ form.student_code }}</div>
+                <div class="col-md-6 mb-3">{{ form.department }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">{{ form.batch }}</div>
+                <div class="col-md-6 mb-3">{{ form.semester }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">{{ form.current_cgpa }}</div>
+                <div class="col-md-6 mb-3">{{ form.personal_email }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">{{ form.personal_contact_number }}</div>
+                <div class="col-md-6 mb-3">{{ form.emergency_contact_number }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3 row-4">{{ form.present_address }}</div>
+                <div class="col-md-6 mb-3 row-4">{{ form.permanent_address }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">{{ form.blood_group }}</div>
+                <div class="col-md-6 mb-3">{{ form.facebook_link }}</div>
+            </div>
+ 
+            <!-- Skills and Interests -->
+            {% comment %} <div class="mb-2 mt-4">
+                <label for="skills"><h5>Skills You Have:</h5></label> <br>
+                {% for skill in form.skills %}
+                    {{ skill }}
+                {% endfor %}
+            </div>
+            <div class="mb-5 mt-4">
+                <label for="interests"><h5>Fields of Interests:</h5></label> <br>
+                {% for interest in form.interests %}
+                    {{ interest }} 
+                {% endfor %}
+            </div> {% endcomment %}
+
+            <!-- Experience and Agreements -->
+            <div class="mb-3 row-4">{{ form.experience_details }}</div>
+            <div class="mb-3 row-4">{{ form.other_clubs_details }}</div>
+            <div class="mb-3">
+                <label><h5 class="mt-4">Agreement to Club Rules</h5></label>
+                <p class="text-muted">Please read and agree to the following terms before submitting your application:</p>
+                <div>{{ form.agree_meeting_attendance }} {{ form.agree_meeting_attendance.label }}</div>
+                <div>{{ form.agree_program_participation }} {{ form.agree_program_participation.label }}</div>
+                <div>{{ form.agree_to_truthfulness }} {{ form.agree_to_truthfulness.label }}</div>
+                <div>{{ form.agree_to_respectfulness }} {{ form.agree_to_respectfulness.label }}</div>
+                <div>{{ form.agree_to_behavior }} {{ form.agree_to_behavior.label }}</div>
+                <div>{{ form.agree_to_tools_usage }} {{ form.agree_to_tools_usage.label }}</div>
+                <div>{{ form.agree_to_disciplinary_rules }} {{ form.agree_to_disciplinary_rules.label }}</div>
+                <div>{{ form.agree_to_general_member_terms }} {{ form.agree_to_general_member_terms.label }}</div>
+            </div>
+
+            <!-- Profile Photo -->
+            <div class="my-4"><h5>Your Photo (Formal) </h5>{{ form.image }}</div> 
+
+            <!-- Submit Button -->
+            <div class="text-center submit">
+                <p class="text-muted consent_text">(I Confirm All The Informations Are Truth. If Found Any Wrong Information, Responsibility is Mine)</p>
+                <button type="submit" class="btn btn-primary w-100 p-2 submit_button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

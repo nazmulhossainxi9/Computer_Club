@@ -242,3 +242,24 @@ def certificate(request):
         'form': form,
         'results': results,
     })
+
+
+def apply(request):
+    if request.method == 'POST':
+        form = forms.ClubJoinRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                # Save the form data to the database
+                form.save()
+                messages.success(request, "Join Request Submitted Successfully.")
+                return redirect('home')  # Prevent duplicate form submission
+            except Exception as e:
+                print(f"Error during form save: {e}")  # Debugging error
+                messages.warning(request, "An error occurred while saving your data. Please try again.")
+        else:
+            print("Form errors:", form.errors)  # Debugging form validation errors
+            messages.warning(request, "There was an error in your submission. Please correct the errors below.")
+    else:
+        form = forms.ClubJoinRequestForm()
+
+    return render(request, 'html/apply.html', {'form': form})

@@ -1,3 +1,10 @@
+.floating-messages{
+    margin: 20px 10px 0 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    float: right !important;
+} 
+
 
 .alert{
     min-width: auto;
@@ -76,3 +83,4 @@
     font-weight: var(--bold);
     font-size: var(--psize);
 }
+

@@ -1,0 +1,28 @@
+.floating-messages{
+    margin: 20px 10px 0 0;
+    position: relative;
+    z-index: 1;
+    float: right;
+}
+
+.title{
+    font-family: var(--poppins);
+    font-size: 33px;
+    font-weight: var(--wblack);
+    color: var(--blue);
+    text-transform: uppercase;
+}
+
+.consent_text{
+    color: red !important;
+}
+
+.submit{
+    margin: 40px 0 10px 0;
+}
+
+.submit_button{
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 600;
+}

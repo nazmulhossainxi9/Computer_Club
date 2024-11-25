@@ -1,3 +1,12 @@
+.floating-messages{
+    margin: 20px 10px 0 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    float: right !important;
+} 
+
+
+
 .image-wrapper {
     width: auto; /* Ensures the image spans the card width */
     height: 400px; /* Fixed height for all images */

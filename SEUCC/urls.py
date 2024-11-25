@@ -31,6 +31,7 @@ urlpatterns = [
     path("events", views.events, name="events"),
     path("members", views.members, name="members"),
     path("certificate", views.certificate, name="certificate"),
+    path("apply", views.apply, name="apply"),
     path("construction", views.construction, name="construction"),
     # path('add-certificate/', views.add_certificate, name='add_certificate'), 
 ]

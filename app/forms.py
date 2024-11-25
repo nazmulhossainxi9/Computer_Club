@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Event, Members, Certificate
+from .models import Event, Members, Certificate, ApplyClub
 
 
 
@@ -188,3 +188,101 @@ class CertificateForm(forms.ModelForm):
             'position': forms.TextInput(attrs={'placeholder': 'Position (optional)', 'class': 'form-control'}),
             'photo': forms.ClearableFileInput(attrs={'multiple': False}),
         }
+
+# class ClubJoinRequestForm(forms.ModelForm):
+#     class Meta:
+#         model = ClubJoinRequest
+#         fields = '__all__'
+#         widgets = {
+#                 'university_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'University Email Address'}),
+#                 'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Full Name'}),
+#                 'student_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Student Code'}),
+#                 'department': forms.Select(attrs={'class': 'form-select'}),
+#                 'batch': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Batch (CSE-44)'}),
+#                 'semester': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Current Semester'}),
+#                 'current_cgpa': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Current CGPA'}),
+#                 'personal_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Personal Email Address'}),
+#                 'personal_contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Personal Contact Number'}),
+#                 'emergency_contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Number'}),
+#                 'present_address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Present Address'}),
+#                 'permanent_address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Permanent Address'}),
+#                 'blood_group': forms.Select(attrs={'class': 'form-select'}),
+#                 'skills': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+#                 'interests': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+#                 'experience_details': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'If You Have Experience About Clubbing, Write N/A If Not...'}),
+#                 'other_clubs_details': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'If You are in Anyother Clubs, Write N/A If Not...'}),
+#                 'facebook_profile_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Your Facebook Profile Link'}),
+#                 'profile_photo': forms.FileInput(attrs={'class': 'form-control'}),
+#                 'agree_meeting_attendance': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#                 'agree_program_participation': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#                 'agree_to_truthfulness': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#                 'agree_to_respectfulness': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#                 'agree_to_behavior': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#                 'agree_to_tools_usage': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#                 'agree_to_disciplinary_rules': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#                 'agree_to_general_member_terms': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#             }
+#         labels = {
+#                 'agree_meeting_attendance': "I will attend 80% of the club meetings",
+#                 'agree_program_participation': "I will not miss Two(2) consecutive programs.",
+#                 'agree_to_truthfulness': "I will be truthful to Club Moderators and other members",
+#                 'agree_to_respectfulness': "I will be respectful to my Faculties and senior students",
+#                 'agree_to_behavior': "I will be helpful and won't behave rudely to my junior studentsr",
+#                 'agree_to_tools_usage': "I am able to use Viber and What's App on my mobile phone. I am using mobile data along with Wi-Fi on my phone.",
+#                 'agree_to_disciplinary_rules': "I will not leave SEUCC without the permission of the Executive Committee",
+#                 'agree_to_general_member_terms': "I will not be involved in any undisciplined activities. If I do so I will accept any punishment taken against me.",
+#             }
+
+
+        
+
+class ClubJoinRequestForm(forms.ModelForm):
+    class Meta:
+        model = ApplyClub
+        fields = '__all__'
+        widgets = {
+                'student_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Student Code'}),
+                'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Full Name'}),
+                'department': forms.Select(attrs={'class': 'form-select'}),
+                'batch': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Batch (CSE-44)'}),
+                'university_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'University Email Address'}),
+                'personal_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Personal Email Address'}),
+                'blood_group': forms.Select(attrs={'class': 'form-select'}),
+                'facebook_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Your Facebook Profile Link'}),
+                'image': forms.FileInput(attrs={'class': 'form-control'}),
+                'semester': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Current Semester'}),
+                'current_cgpa': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Current CGPA'}),
+                'personal_contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Personal Contact Number'}),
+                'emergency_contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Number'}),
+                'present_address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Present Address'}),
+                'permanent_address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Permanent Address'}),
+                # 'skills': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+                # 'interests': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+                'experience_details': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'If You Have Experience About Clubbing, Write N/A If Not...'}),
+                'other_clubs_details': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'If You are in Anyother Clubs, Write N/A If Not...'}),
+                'agree_meeting_attendance': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                'agree_program_participation': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                'agree_to_truthfulness': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                'agree_to_respectfulness': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                'agree_to_behavior': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                'agree_to_tools_usage': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                'agree_to_disciplinary_rules': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+                'agree_to_general_member_terms': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            }
+        labels = {
+                'agree_meeting_attendance': "I will attend 80% of the club meetings",
+                'agree_program_participation': "I will not miss Two(2) consecutive programs.",
+                'agree_to_truthfulness': "I will be truthful to Club Moderators and other members",
+                'agree_to_respectfulness': "I will be respectful to my Faculties and senior students",
+                'agree_to_behavior': "I will be helpful and won't behave rudely to my junior studentsr",
+                'agree_to_tools_usage': "I am able to use Viber and What's App on my mobile phone. I am using mobile data along with Wi-Fi on my phone.",
+                'agree_to_disciplinary_rules': "I will not leave SEUCC without the permission of the Executive Committee",
+                'agree_to_general_member_terms': "I will not be involved in any undisciplined activities. If I do so I will accept any punishment taken against me.",
+            }
+        
+        
+        
+        
+        
+        
+        

@@ -1,4 +1,12 @@
 
+.floating-messages{
+    margin: 20px 10px 0 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    float: right !important;
+} 
+
+
 .photo{
     height: 400px;
     width: 100%;
@@ -22,3 +30,4 @@
 .search{
     z-index: 0 !important;
 }
+
